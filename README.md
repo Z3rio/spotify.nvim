@@ -19,3 +19,6 @@ Simple spotify integration for neovim
   lazy = false
 },
 ```
+
+note:
+this requires the npm package `neovim` to be globally installed

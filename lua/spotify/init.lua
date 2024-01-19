@@ -22,6 +22,19 @@ M.debugLog = function(msg)
   end
 end
 
+M.execCommand = function(cmd)
+  local handle = io.popen(cmd)
+
+  if handle then
+    local result = handle:read("*a")
+    handle:close()
+
+    return result
+  end
+
+  return nil
+end
+
 ---@param options SpotifyOption
 M.setup = function(options)
   M.debugLog("called setup")
@@ -51,7 +64,8 @@ end
 
 M.StartServer = function()
   M.IsServerStarted = true
-  os.execute("cd " .. vim.fn.stdpath("data") .. "/lazy/Spotify.nvim/server && npm run start")
+  local resp = M.execCommand("spotifynvimcli")
+  print("resp", resp)
 end
 
 M.authorize = function()

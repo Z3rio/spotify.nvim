@@ -4,6 +4,7 @@ local M = {}
 M.Opts = {
   debug = false,
   clientId = "",
+  clientSecret = "",
   redirectUri = "http://localhost:8888/callback",
 }
 
@@ -11,6 +12,7 @@ M.Opts = {
 ---@field debug boolean
 ---@field redirectUri string
 ---@field clientId string
+---@field clientSecret string
 
 ---@param msg string
 M.debugLog = function(msg)
@@ -33,7 +35,11 @@ M.execCommand = function(cmd)
 end
 
 M.auth = function()
-  print(M.execCommand("spotifynvimcli auth " .. M.Opts.clientId))
+  print(M.execCommand("spotifynvimcli auth " .. M.Opts.clientId .. " " .. M.Opts.clientSecret))
+end
+
+M.getCurrentSong = function()
+  print(M.execCommand("spotifynvimcli getCurrentSong"))
 end
 
 ---@param options SpotifyOption
@@ -43,6 +49,8 @@ M.setup = function(options)
   M.Opts = vim.tbl_deep_extend("force", M.Opts, options)
 
   M.auth()
+
+  vim.api.nvim_create_user_command("GetCurrentSong", M.getCurrentSong, {})
 end
 
 return M

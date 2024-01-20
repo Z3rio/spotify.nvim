@@ -147,11 +147,15 @@ if (args[0]) {
         );
 
         if (resp.status === 200) {
-          console.log(
-            `${resp.data.item.artists.map((a) => a.name).join(", ")} - ${
-              resp.data.item.name
-            }`
-          );
+          if (resp.data.is_playing === false) {
+            console.log("Nothing playing");
+          } else {
+            console.log(
+              `${resp.data.item.artists.map((a) => a.name).join(", ")} - ${
+                resp.data.item.name
+              }`
+            );
+          }
         }
       }
 

@@ -35,11 +35,21 @@ M.execCommand = function(cmd)
 end
 
 M.auth = function()
-  print(M.execCommand("spotifynvimcli auth " .. M.Opts.clientId .. " " .. M.Opts.clientSecret))
+  M.execCommand("spotifynvimcli auth " .. M.Opts.clientId .. " " .. M.Opts.clientSecret)
 end
 
+local lastValue = nil
+local lastUpdated = nil
 M.getCurrentSong = function()
-  print(M.execCommand("spotifynvimcli getCurrentSong"))
+  local currTime = os.clock()
+  if lastValue == nil or currTime - lastUpdated > 10 then 
+    lastUpdated = currTime
+    vim.schedule(function()
+      lastValue = M.execCommand("spotifynvimcli getCurrentSong")
+    end)
+  end
+
+  return lastValue
 end
 
 ---@param options SpotifyOption
@@ -48,7 +58,7 @@ M.setup = function(options)
 
   M.Opts = vim.tbl_deep_extend("force", M.Opts, options)
 
-  M.auth()
+  vim.schedule(M.auth)
 
   vim.api.nvim_create_user_command("GetCurrentSong", M.getCurrentSong, {})
 end

@@ -1,6 +1,6 @@
 # Spotify.nvim
 
-Simple spotify integration for neovim
+Simple Spotify integration for Neovim
 
 ## Setup
 
@@ -12,7 +12,9 @@ Simple spotify integration for neovim
 
   config = function()
     require("spotify").setup({
-      debug = false
+      debug = false,
+      clientId = "",
+      clientSecret = ""
     })
   end,
 
@@ -20,5 +22,14 @@ Simple spotify integration for neovim
 },
 ```
 
-note:
-this requires the npm package `neovim` to be globally installed
+### NPMJs CLI
+
+Go into `./cli` and run `npm install -g .`
+
+## Usage
+
+### Get current song
+
+```lua
+local currentSong = require("spotify").getCurrentSong()
+```

@@ -2,6 +2,12 @@
 
 Simple Spotify integration for Neovim
 
+## Note:
+
+This is still a work in progress and everything will not be perfect.
+
+I highly appreciate contributions, so if you have any ideas, go ahead!
+
 ## Setup
 
 ### Lazy.nvim
